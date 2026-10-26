@@ -10,4 +10,4 @@ MEMBER_DISCOUNT = 0.10
 # TODO 3: Ask for a coupon code; use None when the answer is blank.
 # TODO 4: Calculate subtotal, discount, after-discount amount, tax, and total.
 # TODO 5: Print a neatly formatted invoice with money rounded to 2 decimals.
-# TODO 6: Print a type report for unit_price, quantity, is_member, coupon_code.
+# TODO 6: Print each input variable's type with four clear print() statements.

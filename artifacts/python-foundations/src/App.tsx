@@ -10,6 +10,10 @@ import welcomeMarkdown from '../python-foundations-part1/README.md?raw';
 import chapterOneMarkdown from '../python-foundations-part1/chapter1.md?raw';
 import chapterTwoMarkdown from '../python-foundations-part1/chapter2.md?raw';
 import capstoneMarkdown from '../python-foundations-part1/capstone.md?raw';
+import instructorWelcomeMarkdown from '../python-foundations-part1/instructor_edition/README.md?raw';
+import instructorChapterOneMarkdown from '../python-foundations-part1/instructor_edition/chapter1.md?raw';
+import instructorChapterTwoMarkdown from '../python-foundations-part1/instructor_edition/chapter2.md?raw';
+import businessCardStarter from '../python-foundations-part1/starter_code/business_card.py?raw';
 import registrationStarter from '../python-foundations-part1/starter_code/registration.py?raw';
 import invoiceStarter from '../python-foundations-part1/starter_code/invoice.py?raw';
 import profileStarter from '../python-foundations-part1/starter_code/profile_card.py?raw';
@@ -17,27 +21,35 @@ import profileStarter from '../python-foundations-part1/starter_code/profile_car
 const queryClient = new QueryClient();
 const pages = [
   { href: '/', label: 'Welcome', number: '00' },
-  { href: '/chapter-1', label: 'Introduction & Environment', number: '01' },
-  { href: '/chapter-2', label: 'Variables and Data Types', number: '02' },
-  { href: '/capstone', label: 'Part 1 capstone', number: '03' },
+  { href: '/chapter-1', label: 'Setup & First Program', number: '01' },
+  { href: '/chapter-2', label: 'Variables, Types & Input', number: '02' },
+  { href: '/capstone', label: 'Checkpoint project', number: '03' },
   { href: '/practice', label: 'Python workspace', number: '04' },
 ];
+const instructorPages = [
+  { href: '/instructor', label: 'Instructor overview', number: 'I0' },
+  { href: '/instructor/chapter-1', label: 'Chapter 1 solutions', number: 'I1' },
+  { href: '/instructor/chapter-2', label: 'Chapter 2 solutions', number: 'I2' },
+];
 const checklist = [
-  'Python is installed and `python --version` works',
+  'Python 3.12 or newer is installed and `python --version` works',
   'VS Code and the Python extension are set up',
-  'I created and activated a virtual environment',
+  'I started the REPL and tried a few calculations',
   'I ran `hello.py` from the terminal',
-  'I completed the five Chapter 1 exercises',
+  'I completed the seven Chapter 1 exercises',
   'I completed the Chapter 1 quick quiz',
-  'I built the Course Registration Receipt project and scored 16 or more',
+  'I built the Business Card project and scored 16 or more',
   'I can name variables correctly and explain why',
   'I can predict the type of any basic value',
-  'I completed the six Chapter 2 exercises',
+  'I can read input, convert it, and show it with an f-string',
+  'I completed the eight Chapter 2 exercises',
   'I completed the Chapter 2 quick quiz',
-  'I built the Mini Shop Invoice project and scored 16 or more',
+  'I built Project A, the Course Registration Receipt, and scored 16 or more',
+  'I built Project B, the Mini Shop Invoice, and scored 16 or more',
   'I built the Student Profile Card without looking at earlier projects',
 ];
 const starters = [
+  { id: 'business-card', label: 'Business Card', file: 'business_card.py', code: businessCardStarter },
   { id: 'registration', label: 'Course Registration Receipt', file: 'registration.py', code: registrationStarter },
   { id: 'invoice', label: 'Mini Shop Invoice', file: 'invoice.py', code: invoiceStarter },
   { id: 'profile', label: 'Student Profile Card', file: 'profile_card.py', code: profileStarter },
@@ -176,9 +188,9 @@ function MarkdownReader({ source }: { source: string }) {
     while (i < rows.length && rows[i].trim() && !/^(#{1,4}\s|```|\||\s*[-*]\s+|\s*\d+\.\s+|\s*>)/.test(rows[i])) para.push(rows[i++]);
     if (!para.length) { i++; continue; }
     const content = para.join(' ');
-    const kind = /^(?:\*\*)?Common mistake/i.test(content) ? 'mistake' : /^(?:\*\*)?Best practice/i.test(content) ? 'practice' : /^(?:\*\*)?Check your understanding/i.test(content) ? 'check' : '';
+    const kind = /^(?:\*\*)?Common mistake/i.test(content) ? 'mistake' : /^(?:\*\*)?Best practice/i.test(content) ? 'practice' : /^(?:\*\*)?Check your understanding/i.test(content) ? 'check' : /^\*\*Trainer's note:/i.test(content) ? 'trainer' : /^\*\*Preview:/i.test(content) ? 'preview' : '';
     if (kind) {
-      const label = kind === 'mistake' ? 'Common mistake' : kind === 'practice' ? 'Best practice' : 'Check your understanding';
+      const label = kind === 'mistake' ? 'Common mistake' : kind === 'practice' ? 'Best practice' : kind === 'check' ? 'Check your understanding' : kind === 'trainer' ? "Trainer's note" : 'Preview';
       const cleaned = content.replace(/^\*\*[^*]+:\*\*\s*/, '').replace(/^\*\*[^*]+\*\*\s*/, '');
       blocks.push(<aside key={`callout-${i}`} className={`callout ${kind}`}><strong>{label}</strong><p>{inline(cleaned)}</p></aside>);
     } else blocks.push(<p key={`p-${i}`}>{inline(content)}</p>);
@@ -188,39 +200,43 @@ function MarkdownReader({ source }: { source: string }) {
 
 function SharedShell({ children }: { children: ReactNode }) {
   const [location] = useLocation();
+  const isInstructor = location.startsWith('/instructor');
   return <div className="app-shell">
     <aside className="sidebar">
-      <Link href="/" className="brand"><span className="brand-mark">Py</span><span><strong>Python Foundations</strong><small>PART 1 · TRAINEE EDITION</small></span></Link>
+      <Link href="/" className="brand"><span className="brand-mark">Py</span><span><strong>Python Foundations</strong><small>{isInstructor ? 'INSTRUCTOR EDITION · ANSWERS' : 'PART 1 · TRAINEE EDITION'}</small></span></Link>
       <div className="nav-label">Your workbook</div>
-      <nav className="side-nav" aria-label="Study navigation">{pages.map((item) => <Link key={item.href} href={item.href} className={`nav-link ${location === item.href ? 'active' : ''}`}><span className="nav-number">{item.number}</span>{item.label}</Link>)}</nav>
-      <div className="sidebar-foot"><b>Ime Edet Nya · CRYOBYTEPRIME</b>Instructor-authored material, made easier to read and practise.</div>
+      <nav className="side-nav" aria-label="Trainee study navigation">{pages.map((item) => <Link key={item.href} href={item.href} className={`nav-link ${location === item.href ? 'active' : ''}`}><span className="nav-number">{item.number}</span>{item.label}</Link>)}</nav>
+      <div className="nav-label instructor-nav-label">Instructor edition · solutions</div>
+      <nav className="side-nav" aria-label="Instructor reference navigation">{instructorPages.map((item) => <Link key={item.href} href={item.href} title={item.label} className={`nav-link ${location === item.href ? 'active instructor-active' : ''}`}><span className="nav-number">{item.number}</span>{item.label}</Link>)}</nav>
+      <div className="sidebar-foot"><b>Ime Edet Nya · CRYOBYTEPRIME</b>{isInstructor ? 'Instructor reference copy. Contains answers and project solutions; do not hand to trainees.' : 'Instructor-authored material, made easier to read and practise.'}</div>
     </aside>
     <header className="mobile-bar">
       <Link href="/" className="mobile-brand"><span className="brand-mark">Py</span>Foundations</Link>
-      <nav className="mobile-nav" aria-label="Study navigation">{pages.map((item) => <Link key={item.href} href={item.href} className={location === item.href ? 'active' : ''}>{item.number}</Link>)}</nav>
+      <nav className="mobile-nav" aria-label="Trainee and instructor navigation">{pages.map((item) => <Link key={item.href} href={item.href} title={item.label} aria-label={item.label} className={location === item.href ? 'active' : ''}>{item.number}</Link>)}{instructorPages.map((item) => <Link key={item.href} href={item.href} title={item.label} aria-label={item.label} className={`instructor-mobile-link ${location === item.href ? 'active' : ''}`}>{item.number}</Link>)}</nav>
     </header>
-    <main className="main-area"><div className="topline"><span>PYTHON FOUNDATIONS / PART 1</span><span className="topline-right"><i className="online-dot" /> A good place to begin</span></div>{children}</main>
+    <main className="main-area"><div className="topline"><span>{isInstructor ? 'INSTRUCTOR COPY / PART 1' : 'PYTHON FOUNDATIONS / PART 1'}</span><span className="topline-right"><i className="online-dot" />{isInstructor ? 'Reference solutions included' : 'A good place to begin'}</span></div>{children}</main>
   </div>;
 }
 
 function HomePage() {
   const [done, setDone] = useState<boolean[]>(() => {
-    try { const saved = JSON.parse(localStorage.getItem('pf-progress') || '[]'); return checklist.map((_, i) => Boolean(saved[i])); } catch { return checklist.map(() => false); }
+    try { const saved = JSON.parse(localStorage.getItem('pf-progress-v11') || '[]'); return checklist.map((_, i) => Boolean(saved[i])); } catch { return checklist.map(() => false); }
   });
-  useEffect(() => { localStorage.setItem('pf-progress', JSON.stringify(done)); }, [done]);
+  useEffect(() => { localStorage.setItem('pf-progress-v11', JSON.stringify(done)); }, [done]);
   const completed = done.filter(Boolean).length;
   const toggle = (index: number) => setDone((current) => current.map((value, i) => i === index ? !value : value));
   return <div className="page-wrap animate-in">
     <section className="hero-home">
-      <div><div className="eyebrow">Your first steps in Python · Part 1</div><h1 className="hero-title">Learn it.<br /><em>Try it.</em> Make it yours.</h1><p className="hero-intro">A practical companion for your first programs. Read the instructor’s workbook as written, then take each idea for a spin in your own coding space.</p></div>
-      <aside className="hero-aside"><div className="aside-number">01—02</div><p>Two chapters, two guided projects, and a capstone to bring the pieces together.</p></aside>
+      <div><div className="eyebrow">Your first steps in Python · Part 1 · Version 1.1</div><h1 className="hero-title">Learn it.<br /><em>Try it.</em> Make it yours.</h1><p className="hero-intro">A practical companion for your first programs. Read your workbook as written, then take each idea for a spin in your own coding space.</p></div>
+      <aside className="hero-aside"><div className="aside-number">01—02</div><p>Two chapters, three guided projects, and a checkpoint to bring the pieces together.</p></aside>
     </section>
     <div className="section-head"><h2>Choose your next step</h2><span>THE STUDY PATH</span></div>
     <div className="study-grid">
-      <Link href="/chapter-1" className="study-card feature"><span className="card-index">01 / CHAPTER</span><h3>Introduction &<br />Environment</h3><p>Install Python, meet the interpreter, and write your first program.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
-      <Link href="/chapter-2" className="study-card"><span className="card-index">02 / CHAPTER</span><h3>Variables &<br />Data Types</h3><p>Give values a name, inspect their types, and convert them with care.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
-      <Link href="/capstone" className="study-card"><span className="card-index">03 / BUILD</span><h3>Student Profile<br />Card</h3><p>Bring input, conversion, booleans, and formatted output together.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+      <Link href="/chapter-1" className="study-card feature"><span className="card-index">01 / CHAPTER</span><h3>Setup &<br />First Program</h3><p>Install Python, meet the interpreter, and build a business card.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+      <Link href="/chapter-2" className="study-card"><span className="card-index">02 / CHAPTER</span><h3>Variables, Types<br />& Input</h3><p>Name and convert values, read input, and format output.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+      <Link href="/capstone" className="study-card"><span className="card-index">03 / CHECKPOINT</span><h3>Student Profile<br />Card</h3><p>Bring input, conversion, booleans, and formatted output together.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
     </div>
+    <Link href="/instructor" className="instructor-entry"><span className="instructor-entry-kicker">FOR TRAINERS · INSTRUCTOR EDITION</span><strong>Open the separate reference copy</strong><span>Trainer notes, exercise answers, and project solutions are included. Do not hand this edition to trainees.</span><ArrowRight size={17} /></Link>
     <div className="two-col">
       <section className="tips-panel"><div className="eyebrow">A note before you begin</div><h3>Small, steady steps win.</h3>
         {['Type every example yourself. The tiny details are where learning sticks.', 'Run your code after each change. Make the feedback loop short.', 'When something breaks, read the exact error before changing anything.', 'Try the exercises first; your trainer can help you untangle the hard parts.'].map((tip, i) => <div className="tip-row" key={tip}><span className="tip-mark">0{i + 1}</span><span>{tip}</span></div>)}
@@ -232,13 +248,30 @@ function HomePage() {
   </div>;
 }
 
-function ReaderPage({ title, number, source, prev, next }: { title: string; number: string; source: string; prev?: [string, string]; next?: [string, string] }) {
+function ReaderPage({ title, number, source, prev, next, instructor = false }: { title: string; number: string; source: string; prev?: [string, string]; next?: [string, string]; instructor?: boolean }) {
   return <div className="page-wrap reader-page animate-in">
-    <div className="reader-top"><span className="reader-kicker">PART 1 / {number}</span><Link href="/practice" className="button-outline"><Code2 size={14} /> Practise in workspace</Link></div>
+    <div className="reader-top"><span className="reader-kicker">{instructor ? `INSTRUCTOR REFERENCE / ${number}` : `PART 1 / ${number}`}</span><Link href="/practice" className="button-outline"><Code2 size={14} /> Practise in workspace</Link></div>
     <h1 className="reader-title">{title}</h1>
     <p className="reader-lede">Read at your pace. The workbook content is preserved in full; diagrams and callouts add a little more room to understand each idea.</p>
+    {instructor && <aside className="edition-warning" role="note"><strong>Instructor copy · answers included</strong><span>This section contains trainer notes, exercise answers, and project solutions. It is clearly separated from the trainee edition, but is not password-protected.</span></aside>}
     <MarkdownReader source={source} />
     <nav className="reader-footer-nav" aria-label="Adjacent sections">{prev ? <Link href={prev[0]}><ArrowLeft size={14} /> {prev[1]}</Link> : <span />}{next && <Link href={next[0]}>{next[1]} <ArrowRight size={14} /></Link>}</nav>
+  </div>;
+}
+
+function InstructorHomePage() {
+  return <div className="page-wrap reader-page animate-in">
+    <div className="reader-top"><span className="reader-kicker">SEPARATE TRAINER REFERENCE</span></div>
+    <h1 className="reader-title">Instructor Edition</h1>
+    <aside className="edition-warning" role="note"><strong>Contains answers and full solutions</strong><span>The uploaded Instructor Edition says not to hand this copy to trainees. This view is separate from the learner chapters but is not password-protected.</span></aside>
+    <Link href="/instructor/chapter-1" className="instructor-entry"><span className="instructor-entry-kicker">SOURCE REVIEW</span><strong>One item to check in the supplied v1.1 file</strong><span>Its “Where to find the answers” table refers to a Checkpoint project solution and a review checklist/roadmap, but the uploaded file ends after Project B’s self-check and does not include those sections.</span><ArrowRight size={17} /></Link>
+    <div className="section-head instructor-section-head"><h2>Instructor chapters</h2><span>REFERENCE MATERIALS</span></div>
+    <div className="study-grid instructor-study-grid">
+      <Link href="/instructor/chapter-1" className="study-card feature"><span className="card-index">I1 / CHAPTER</span><h3>Setup &<br />First Program</h3><p>Includes trainer guidance, exercise solutions, and the Business Card reference solution.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+      <Link href="/instructor/chapter-2" className="study-card"><span className="card-index">I2 / CHAPTER</span><h3>Variables, Types<br />& Input</h3><p>Includes worked exercises and reference solutions for both projects.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+    </div>
+    <div className="eyebrow instructor-source-label">Instructor Edition · Version 1.1</div>
+    <MarkdownReader source={instructorWelcomeMarkdown} />
   </div>;
 }
 
@@ -267,8 +300,12 @@ async function loadPython() {
 }
 
 function PracticePage() {
-  const [selected, setSelected] = useState(starters[0].id);
-  const [code, setCode] = useState(() => localStorage.getItem('pf-code-draft') || registrationStarter);
+  const [selected, setSelected] = useState(() => {
+    const saved = localStorage.getItem('pf-starter-choice');
+    if (starters.some((item) => item.id === saved)) return saved as string;
+    return localStorage.getItem('pf-code-draft') ? 'registration' : starters[0].id;
+  });
+  const [code, setCode] = useState(() => localStorage.getItem('pf-code-draft') || starters.find((item) => item.id === selected)?.code || businessCardStarter);
   const [stdin, setStdin] = useState('');
   const [output, setOutput] = useState('');
   const [runtime, setRuntime] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
@@ -278,6 +315,7 @@ function PracticePage() {
   const starter = starters.find((item) => item.id === selected) || starters[0];
   const lineCount = useMemo(() => Math.max(1, code.split('\n').length), [code]);
   useEffect(() => { localStorage.setItem('pf-code-draft', code); }, [code]);
+  useEffect(() => { localStorage.setItem('pf-starter-choice', selected); }, [selected]);
   const changeStarter = (id: string) => {
     const item = starters.find((entry) => entry.id === id);
     if (item) { setSelected(id); setCode(item.code); setOutput(''); setError(''); }
@@ -345,10 +383,13 @@ function PracticePage() {
 function Router() {
   return <Switch>
     <Route path="/"><SharedShell><HomePage /></SharedShell></Route>
-    <Route path="/chapter-1"><SharedShell><ReaderPage title="Introduction & Environment" number="CHAPTER 01" source={chapterOneMarkdown} next={['/chapter-2', 'Chapter 2']} /></SharedShell></Route>
-    <Route path="/chapter-2"><SharedShell><ReaderPage title="Variables and Data Types" number="CHAPTER 02" source={chapterTwoMarkdown} prev={['/chapter-1', 'Chapter 1']} next={['/capstone', 'Part 1 capstone']} /></SharedShell></Route>
-    <Route path="/capstone"><SharedShell><ReaderPage title="Part 1 capstone" number="CAPSTONE" source={capstoneMarkdown} prev={['/chapter-2', 'Chapter 2']} next={['/practice', 'Workspace']} /></SharedShell></Route>
+    <Route path="/chapter-1"><SharedShell><ReaderPage title="Setup and First Program" number="CHAPTER 01" source={chapterOneMarkdown} next={['/chapter-2', 'Chapter 2']} /></SharedShell></Route>
+    <Route path="/chapter-2"><SharedShell><ReaderPage title="Variables, Types, and Input" number="CHAPTER 02" source={chapterTwoMarkdown} prev={['/chapter-1', 'Chapter 1']} next={['/capstone', 'Checkpoint project']} /></SharedShell></Route>
+    <Route path="/capstone"><SharedShell><ReaderPage title="Checkpoint project" number="STUDENT PROFILE CARD" source={capstoneMarkdown} prev={['/chapter-2', 'Chapter 2']} next={['/practice', 'Workspace']} /></SharedShell></Route>
     <Route path="/practice"><SharedShell><PracticePage /></SharedShell></Route>
+    <Route path="/instructor"><SharedShell><InstructorHomePage /></SharedShell></Route>
+    <Route path="/instructor/chapter-1"><SharedShell><ReaderPage title="Setup and First Program" number="CHAPTER 01 · INSTRUCTOR" source={instructorChapterOneMarkdown} next={['/instructor/chapter-2', 'Instructor Chapter 2']} instructor /></SharedShell></Route>
+    <Route path="/instructor/chapter-2"><SharedShell><ReaderPage title="Variables, Types, and Input" number="CHAPTER 02 · INSTRUCTOR" source={instructorChapterTwoMarkdown} prev={['/instructor/chapter-1', 'Instructor Chapter 1']} instructor /></SharedShell></Route>
     <Route><SharedShell><NotFound /></SharedShell></Route>
   </Switch>;
 }

@@ -2,22 +2,22 @@
 
 ## Trainee Edition · Part 1: Chapters 1–2
 
-Oct 25, 2026 · @Edet
+Oct 26, 2026 · @Edet
 
-Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.0
+Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.1
 
 ## Welcome to Python Foundations
 
-This workbook takes you from zero to writing your first complete Python programs, with no programming experience needed. Part 1 covers Chapter 1 (Introduction & Environment) and Chapter 2 (Variables and Data Types).
+This workbook takes you from zero to writing your first complete Python programs, with no programming experience needed. Part 1 covers Chapter 1 (Setup and First Program) and Chapter 2 (Variables, Types, and Input). The chapters follow the Python Universal Learning Path (Revised Edition): Chapter 1 is Phase 1 section 1.1, and Chapter 2 is section 1.2.
 
 ### What you will be able to do after Part 1
 
-- Explain what Python is and install it on your computer
-- Set up VS Code and a virtual environment for your projects
-- Write, save and run Python programs
-- Take input from a user and display formatted output
+- Explain in a few sentences what Python is, and install it on your computer
+- Set up VS Code and run code in the REPL and from the terminal
+- Write, save and run programs with correct syntax, indentation and comments
 - Store information in variables and choose the right data type
 - Convert between data types and understand `True`, `False` and `None`
+- Read input from a user and format your output with f-strings
 
 ### What you need
 
@@ -25,7 +25,7 @@ This workbook takes you from zero to writing your first complete Python programs
 | --- | --- |
 | A computer (Windows, macOS or Linux) | To install Python and write code |
 | An internet connection | To download Python and Visual Studio Code |
-| Python 3 | The language itself. You install it in Chapter 1 |
+| Python 3.12 or newer (3.10 is the minimum) | The language itself. You install it in Chapter 1 |
 | Visual Studio Code with the Python extension | Your code editor. You set it up in Chapter 1 |
 | A notebook or pen | To write quiz answers and notes |
 
@@ -54,45 +54,48 @@ This workbook takes you from zero to writing your first complete Python programs
 | Best practice | The professional standard to follow from day one |
 | Check your understanding | Short questions to test what you just learned |
 | Project | A hands-on build that combines the chapter's skills |
+| Preview | A topic you will meet properly in a later chapter |
 
-All code in this workbook was tested on Python 3.13. Newer Python 3 versions work the same way for everything in Part 1.
+All code in this workbook was tested on Python 3.13. Any newer Python 3 version works the same way for everything in Part 1.
 
 *Copyright 2026 Ime Edet Nya. All rights reserved. Python and Visual Studio Code are trademarks of their respective owners.*
 
 ## Contents
 
-Part 1 has two chapters, each ending with a project, and a capstone that combines both.
+Part 1 has two chapters, each ending with a project, and a checkpoint project that combines both. Chapter numbers match the Learning Path: Chapter *n* is Phase 1 section 1.*n*.
 
-**Chapter 1: Introduction & Environment**
+**Chapter 1: Setup and First Program** (Learning Path 1.1)
 
 - 1.1 What is Python?
-- 1.2 History and features, including 1.2.1 The Kitchen Analogy
-- 1.3 Installation and environment setup
-- 1.4 The Python interpreter, with the Installation & Execution flowchart
-- 1.5 Virtual environments
-- 1.6 Your first program: Hello World
-- 1.7 Setting up a code editor (VS Code)
-- 1.8 Basic syntax and indentation
-- 1.9 Comments
-- 1.10 Output with `print()`
-- 1.11 User input
+- 1.2 History and features (optional reading), including 1.2.1 The Kitchen Analogy
+- 1.3 Installing Python
+- 1.4 The Python interpreter and the REPL, with the Installation & Execution flowchart
+- 1.5 Your first program: Hello World
+- 1.6 Setting up VS Code
+- 1.7 Basic syntax and indentation
+- 1.8 Comments
+- 1.9 Output with `print()`
 - Exercises, quick quiz and summary
-- **Project: Course Registration Receipt**
+- **Project: Business Card**
 
-**Chapter 2: Variables and Data Types**
+**Chapter 2: Variables, Types, and Input** (Learning Path 1.2)
 
-- 2.1 Variables and naming rules, including 2.1.1 The Labeled Storage Box Analogy
+- 2.1 Variables and naming rules, including 2.1.1 The Labeled Storage Box Analogy and 2.1.2 Variables in code
 - 2.2 Multiple assignment
-- 2.3 Global and local variables
-- 2.4 Data types overview
-- 2.5 Numbers
-- 2.6 Type casting and conversion
-- 2.7 Booleans and `None`
-- 2.8 Literals
+- 2.3 Data types overview and `type()`
+- 2.4 Numbers
+- 2.5 Booleans and `None`
+- 2.6 Literals
+- 2.7 Type casting and conversion
+- 2.8 User input with `input()`
+- 2.9 f-strings
 - Exercises, quick quiz and summary
-- **Project: Mini Shop Invoice**
+- **Project A: Course Registration Receipt**
+- **Project B: Mini Shop Invoice**
 
-**Part 1 capstone:** Student Profile Card
+**Checkpoint project:** Student Profile Card
 
 **My progress checklist and what comes next**
+
+**Coming later:** virtual environments (Chapter 10), variable scope (Chapter 7) and truthiness (Chapter 3) are taught in the chapters where you first need them.
 

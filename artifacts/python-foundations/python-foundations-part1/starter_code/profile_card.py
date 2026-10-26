@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Starter template: Student Profile Card (Part 1 capstone)."""
+"""Starter template: Student Profile Card (Part 1 checkpoint project)."""
 
 # Name: ____________   Date: ____________
 CARD_TITLE = "PROFILE CARD"

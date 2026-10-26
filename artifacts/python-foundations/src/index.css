@@ -393,6 +393,7 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visi
 .brand small { display:block; color:#b9c8c4; font-size:11px; margin-top:3px; letter-spacing:.04em; }
 .nav-label { color:#8fa8a6; font: 500 10px var(--app-font-mono); letter-spacing:.13em; text-transform:uppercase; padding:12px 11px 9px; }
 .side-nav { display:grid; gap:4px; }
+.instructor-nav-label { margin-top:10px; color:#d6b77e; }
 .nav-link { min-height:43px; display:flex; align-items:center; gap:11px; text-decoration:none; color:#d3dfd9; padding:0 11px; border-radius:8px; font-size:13px; transition:background .18s, color .18s, transform .18s; }
 .nav-link:hover { background:#2b4a4e; color:#fff; transform:translateX(2px); }
 .nav-link.active { background:#e0b36e; color:#263b3d; font-weight:700; }
@@ -427,6 +428,15 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visi
 .feature p { color:#c0d0ca; }
 .card-arrow { margin-top:auto; align-self:flex-end; color:#ad7e3d; font-size:18px; }
 .feature .card-arrow { color:#e6bd7c; }
+.instructor-entry { position:relative; display:flex; flex-direction:column; gap:7px; margin-top:18px; padding:17px 52px 17px 19px; border:1px solid #d5bd91; border-radius:9px; background:#f1eadb; color:#314d4e; text-decoration:none; transition:background .18s,transform .18s; }
+.instructor-entry:hover { background:#e9dfcb; transform:translateY(-2px); }
+.instructor-entry-kicker { color:#966b31; font:10px var(--app-font-mono); letter-spacing:.12em; }
+.instructor-entry strong { font:500 19px var(--app-font-serif); }
+.instructor-entry span:last-of-type { color:#697777; font-size:12px; line-height:1.6; }
+.instructor-entry > svg { position:absolute; right:18px; top:50%; transform:translateY(-50%); color:#9b7039; }
+.instructor-section-head { margin-top:27px; }
+.instructor-study-grid { grid-template-columns:1fr 1fr; }
+.instructor-source-label { margin-top:42px; }
 .two-col { display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start; margin-top:42px; }
 .tips-panel { border-top:2px solid #d4aa68; padding:18px 0 0; }
 .tips-panel h3 { font:500 24px var(--app-font-serif); margin:0 0 15px; }
@@ -455,6 +465,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visi
 .reader-kicker { color:#987340;font:11px var(--app-font-mono);letter-spacing:.08em;text-transform:uppercase; }
 .reader-title { font:500 clamp(42px,6vw,68px)/1 var(--app-font-serif);letter-spacing:-.045em;margin:9px 0 13px;color:#20383d; }
 .reader-lede { color:#687879;font-size:15px;line-height:1.7;max-width:690px; }
+.edition-warning { display:flex; flex-direction:column; gap:6px; border-left:4px solid #b66a47; border-radius:7px; margin:21px 0; padding:14px 17px; background:#f3e4d9; color:#604538; }
+.edition-warning strong { font:700 11px var(--app-font-mono); letter-spacing:.08em; text-transform:uppercase; }
+.edition-warning span { font-size:13px; line-height:1.65; }
 .reader-content { margin-top:38px;max-width:760px; }
 .reader-content h2 { font:500 34px/1.1 var(--app-font-serif);letter-spacing:-.03em;margin:53px 0 16px;padding-top:15px;border-top:1px solid #ddd5c6;color:#223b40; }
 .reader-content h3 { font:600 21px/1.25 var(--app-font-sans);letter-spacing:-.02em;margin:34px 0 12px;color:#315b5c; }
@@ -479,6 +492,10 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visi
 .callout.practice strong:first-child { color:#3d7567; }
 .callout.check { border-color:#c99b54;background:#f2ead7; }
 .callout.check strong:first-child { color:#9a7136; }
+.callout.trainer { border-color:#7c7396;background:#eeeaf5; }
+.callout.trainer strong:first-child { color:#655982; }
+.callout.preview { border-color:#65869a;background:#e8eff2; }
+.callout.preview strong:first-child { color:#4b7085; }
 .reader-content h3.heading-callout { border-radius:7px;padding:13px 15px;margin-top:31px;font:700 11px var(--app-font-mono);letter-spacing:.1em;text-transform:uppercase;border-left:3px solid; }
 .reader-content h3.heading-callout.mistake { color:#a54e40;background:#f2e5df;border-color:#bc6251; }
 .reader-content h3.heading-callout.practice { color:#3d7567;background:#e4eee7;border-color:#538779; }

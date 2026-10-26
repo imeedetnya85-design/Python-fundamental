@@ -1,4 +1,4 @@
-## Part 1 capstone: Student Profile Card
+## Checkpoint project: Student Profile Card
 
 This project combines Chapters 1 and 2: input, type conversion, f-strings, booleans and `type()`. Build it from scratch in a file called `profile_card.py`, using the requirements and the expected result below. Do not look back at earlier projects until you have tried.
 
@@ -22,7 +22,7 @@ Name       : Amara Okafor
 Age        : 25 (next year: 26)
 Height     : 1.68 m
 Student    : True
-Age type   : int
+Age type   : <class 'int'>
 ```
 
 A second check: `Chidi Eze`, `31`, `1.8` and `no` should show `Height     : 1.80 m`, `Student    : False` and `Age        : 31 (next year: 32)`.
@@ -37,31 +37,33 @@ A second check: `Chidi Eze`, `31`, `1.8` and `no` should show `Height     : 1.80
 
 Tick each item when you have finished it. Ask your trainer about anything you could not complete.
 
-### Chapter 1: Introduction & Environment
+### Chapter 1: Setup and First Program
 
-- [ ] Python is installed and `python --version` works
+- [ ] Python 3.12 or newer is installed and `python --version` works
 - [ ] VS Code and the Python extension are set up
-- [ ] I created and activated a virtual environment
+- [ ] I started the REPL and tried a few calculations
 - [ ] I ran `hello.py` from the terminal
-- [ ] I completed the five Chapter 1 exercises
+- [ ] I completed the seven Chapter 1 exercises
 - [ ] I completed the Chapter 1 quick quiz
-- [ ] I built the Course Registration Receipt project and scored 16 or more
+- [ ] I built the Business Card project and scored 16 or more
 
-### Chapter 2: Variables and Data Types
+### Chapter 2: Variables, Types, and Input
 
 - [ ] I can name variables correctly and explain why
 - [ ] I can predict the type of any basic value
-- [ ] I completed the six Chapter 2 exercises
+- [ ] I can read input, convert it, and show it with an f-string
+- [ ] I completed the eight Chapter 2 exercises
 - [ ] I completed the Chapter 2 quick quiz
-- [ ] I built the Mini Shop Invoice project and scored 16 or more
+- [ ] I built Project A, the Course Registration Receipt, and scored 16 or more
+- [ ] I built Project B, the Mini Shop Invoice, and scored 16 or more
 
-### Part 1 capstone
+### Checkpoint project
 
 - [ ] I built the Student Profile Card without looking at earlier projects
 
 ### What comes next
 
-Part 2 continues with **Chapter 3: Operators** (arithmetic, comparison, logical, membership and identity) and **Chapter 4: Control Flow** (`if`, `elif`, `else`, `match-case`, `for` and `while` loops, and `range()`). Several things you copied as given in the projects, such as `or` and the `for` loop, will be explained there.
+The next chapters follow the Learning Path in order: **Chapter 3: Operators and Truthiness** (arithmetic, comparison, logical, membership and identity operators, and what counts as `True` or `False`) and **Chapter 4: Strings** (slicing, methods and formatting). Several things you copied as given in the projects, such as `or`, `==`, `.strip()` and `.lower()`, will be explained there. Virtual environments, which you may have heard about, come in Chapter 10, and variable scope comes with functions in Chapter 7.
 
 ### Questions to ask my trainer
 
