@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Python Foundations · Part 1"
+description = "A visual, responsive Python training handbook for beginners, preserving the complete original Chapters 1–2 workbook and adding diagrams, guided starter code, and an interactive code practice space."
+version = "1.0.0"
+id = "artifacts/python-foundations"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25170
+
+[services.development]
+run = "pnpm --filter @workspace/python-foundations run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/python-foundations", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/python-foundations/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25170"
+BASE_PATH = "/"
