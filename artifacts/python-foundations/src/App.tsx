@@ -1,18 +1,15 @@
-import { type ElementType, type KeyboardEvent, type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { type ElementType, type FormEvent, type KeyboardEvent, type ReactElement, type ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import { Link, Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { ArrowDownToLine, ArrowLeft, ArrowRight, Clipboard, Code2, RotateCcw, Terminal } from 'lucide-react';
+import { ArrowDownToLine, ArrowLeft, ArrowRight, Clipboard, Code2, LockKeyhole, LogOut, RotateCcw, Terminal } from 'lucide-react';
 import welcomeMarkdown from '../python-foundations-part1/README.md?raw';
 import chapterOneMarkdown from '../python-foundations-part1/chapter1.md?raw';
 import chapterTwoMarkdown from '../python-foundations-part1/chapter2.md?raw';
 import capstoneMarkdown from '../python-foundations-part1/capstone.md?raw';
-import instructorWelcomeMarkdown from '../python-foundations-part1/instructor_edition/README.md?raw';
-import instructorChapterOneMarkdown from '../python-foundations-part1/instructor_edition/chapter1.md?raw';
-import instructorChapterTwoMarkdown from '../python-foundations-part1/instructor_edition/chapter2.md?raw';
 import businessCardStarter from '../python-foundations-part1/starter_code/business_card.py?raw';
 import registrationStarter from '../python-foundations-part1/starter_code/registration.py?raw';
 import invoiceStarter from '../python-foundations-part1/starter_code/invoice.py?raw';
@@ -253,17 +250,145 @@ function ReaderPage({ title, number, source, prev, next, instructor = false }: {
     <div className="reader-top"><span className="reader-kicker">{instructor ? `INSTRUCTOR REFERENCE / ${number}` : `PART 1 / ${number}`}</span><Link href="/practice" className="button-outline"><Code2 size={14} /> Practise in workspace</Link></div>
     <h1 className="reader-title">{title}</h1>
     <p className="reader-lede">Read at your pace. The workbook content is preserved in full; diagrams and callouts add a little more room to understand each idea.</p>
-    {instructor && <aside className="edition-warning" role="note"><strong>Instructor copy · answers included</strong><span>This section contains trainer notes, exercise answers, and project solutions. It is clearly separated from the trainee edition, but is not password-protected.</span></aside>}
+    {instructor && <aside className="edition-warning" role="note"><strong>Password-protected instructor copy</strong><span>This section contains trainer notes, exercise answers, and project solutions. Sign out when you have finished.</span></aside>}
     <MarkdownReader source={source} />
     <nav className="reader-footer-nav" aria-label="Adjacent sections">{prev ? <Link href={prev[0]}><ArrowLeft size={14} /> {prev[1]}</Link> : <span />}{next && <Link href={next[0]}>{next[1]} <ArrowRight size={14} /></Link>}</nav>
   </div>;
 }
 
-function InstructorHomePage() {
+function InstructorGate({ children }: { children: ReactNode }) {
+  const [access, setAccess] = useState<'checking' | 'locked' | 'open'>('checking');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    fetch('/api/instructor/session', { cache: 'no-store', credentials: 'same-origin' })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('Could not verify instructor access.');
+        return response.json() as Promise<{ authenticated?: boolean }>;
+      })
+      .then((result) => { if (active) setAccess(result.authenticated ? 'open' : 'locked'); })
+      .catch(() => {
+        if (active) {
+          setError('Could not verify access. Check your connection, then try the password again.');
+          setAccess('locked');
+        }
+      });
+    return () => { active = false; };
+  }, []);
+
+  const login = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError('');
+    setSubmitting(true);
+    try {
+      const response = await fetch('/api/instructor/login', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      });
+      const result = await response.json() as { authenticated?: boolean; error?: string };
+      if (!response.ok) {
+        setError(result.error || 'Could not sign in. Try again.');
+        return;
+      }
+      setPassword('');
+      setAccess('open');
+    } catch {
+      setError('Could not connect to the sign-in service. Try again in a moment.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      const response = await fetch('/api/instructor/logout', { method: 'POST', credentials: 'same-origin' });
+      if (!response.ok) throw new Error('Sign out failed.');
+      setPassword('');
+      setAccess('locked');
+      setError('');
+    } catch {
+      setError('Could not confirm sign out. Check your connection and try again.');
+    }
+  };
+
+  if (access === 'checking') {
+    return <div className="page-wrap instructor-lock-page" role="status"><LockKeyhole size={24} /><p>Checking instructor access…</p></div>;
+  }
+  if (access === 'locked') {
+    return <section className="page-wrap instructor-lock-page animate-in">
+      <div className="instructor-lock-mark"><LockKeyhole size={22} /></div>
+      <div className="eyebrow">INSTRUCTOR ACCESS</div>
+      <h1>Enter the instructor password</h1>
+      <p>Trainer notes, exercise answers, and project solutions are only sent to this browser after sign-in.</p>
+      <form className="instructor-login-form" onSubmit={login}>
+        <input className="sr-only" type="text" name="username" autoComplete="username" value="instructor" readOnly tabIndex={-1} aria-hidden="true" />
+        <label htmlFor="instructor-password">Instructor password</label>
+        <input id="instructor-password" name="password" type="password" autoComplete="current-password" minLength={12} maxLength={256} required value={password} onChange={(event) => setPassword(event.target.value)} />
+        {error && <p className="instructor-login-error" role="alert">{error}</p>}
+        <button type="submit" className="button-primary" disabled={submitting}>{submitting ? 'Checking…' : 'Unlock instructor edition'} <ArrowRight size={15} /></button>
+      </form>
+      <p className="instructor-session-note">This shared instructor session expires after 8 hours. Sign out when finished on a shared device.</p>
+    </section>;
+  }
+
+  return <>
+    <div className="page-wrap instructor-session-bar"><span><LockKeyhole size={14} /> Instructor session active</span><button type="button" onClick={logout}><LogOut size={14} /> Sign out</button></div>
+    {error && <div className="page-wrap instructor-login-error" role="alert">{error}</div>}
+    {children}
+  </>;
+}
+
+function InstructorDocumentPage({ document }: { document: 'overview' | 'chapter-1' | 'chapter-2' }) {
+  const [source, setSource] = useState<string | null>(null);
+  const [failure, setFailure] = useState<'expired' | 'unavailable' | null>(null);
+  const [attempt, setAttempt] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    setSource(null);
+    setFailure(null);
+    fetch(`/api/instructor/content/${document}`, { cache: 'no-store', credentials: 'same-origin' })
+      .then(async (response) => {
+        if (response.status === 401) {
+          if (active) setFailure('expired');
+          return null;
+        }
+        if (!response.ok) throw new Error('The instructor document is unavailable.');
+        const result = await response.json() as { content?: string };
+        if (typeof result.content !== 'string') throw new Error('The instructor document response was incomplete.');
+        return result.content;
+      })
+      .then((content) => { if (active && content !== null && content !== undefined) setSource(content); })
+      .catch(() => { if (active) setFailure('unavailable'); });
+    return () => { active = false; };
+  }, [document, attempt]);
+
+  if (failure === 'expired') {
+    return <div className="page-wrap instructor-document-state"><h1>Instructor session expired</h1><p>Sign in again to continue reading the reference copy.</p><Link className="button-primary" href="/instructor">Return to instructor sign-in <ArrowRight size={15} /></Link></div>;
+  }
+  if (failure === 'unavailable') {
+    return <div className="page-wrap instructor-document-state"><h1>Could not load this document</h1><p>Check your connection and try again.</p><button className="button-primary" onClick={() => setAttempt((value) => value + 1)}>Retry <RotateCcw size={14} /></button></div>;
+  }
+  if (source === null) {
+    return <div className="page-wrap instructor-document-state" role="status">Loading protected instructor material…</div>;
+  }
+  if (document === 'overview') return <InstructorHomePage source={source} />;
+  if (document === 'chapter-1') {
+    return <ReaderPage title="Setup and First Program" number="CHAPTER 01 · INSTRUCTOR" source={source} next={['/instructor/chapter-2', 'Instructor Chapter 2']} instructor />;
+  }
+  return <ReaderPage title="Variables, Types, and Input" number="CHAPTER 02 · INSTRUCTOR" source={source} prev={['/instructor/chapter-1', 'Instructor Chapter 1']} instructor />;
+}
+
+function InstructorHomePage({ source }: { source: string }) {
   return <div className="page-wrap reader-page animate-in">
     <div className="reader-top"><span className="reader-kicker">SEPARATE TRAINER REFERENCE</span></div>
     <h1 className="reader-title">Instructor Edition</h1>
-    <aside className="edition-warning" role="note"><strong>Contains answers and full solutions</strong><span>The uploaded Instructor Edition says not to hand this copy to trainees. This view is separate from the learner chapters but is not password-protected.</span></aside>
+    <aside className="edition-warning" role="note"><strong>Contains answers and full solutions</strong><span>The uploaded Instructor Edition says not to hand this copy to trainees. Password protection keeps its contents separate from the learner chapters.</span></aside>
     <Link href="/instructor/chapter-1" className="instructor-entry"><span className="instructor-entry-kicker">SOURCE REVIEW</span><strong>One item to check in the supplied v1.1 file</strong><span>Its “Where to find the answers” table refers to a Checkpoint project solution and a review checklist/roadmap, but the uploaded file ends after Project B’s self-check and does not include those sections.</span><ArrowRight size={17} /></Link>
     <div className="section-head instructor-section-head"><h2>Instructor chapters</h2><span>REFERENCE MATERIALS</span></div>
     <div className="study-grid instructor-study-grid">
@@ -271,7 +396,7 @@ function InstructorHomePage() {
       <Link href="/instructor/chapter-2" className="study-card"><span className="card-index">I2 / CHAPTER</span><h3>Variables, Types<br />& Input</h3><p>Includes worked exercises and reference solutions for both projects.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
     </div>
     <div className="eyebrow instructor-source-label">Instructor Edition · Version 1.1</div>
-    <MarkdownReader source={instructorWelcomeMarkdown} />
+    <MarkdownReader source={source} />
   </div>;
 }
 
@@ -387,9 +512,9 @@ function Router() {
     <Route path="/chapter-2"><SharedShell><ReaderPage title="Variables, Types, and Input" number="CHAPTER 02" source={chapterTwoMarkdown} prev={['/chapter-1', 'Chapter 1']} next={['/capstone', 'Checkpoint project']} /></SharedShell></Route>
     <Route path="/capstone"><SharedShell><ReaderPage title="Checkpoint project" number="STUDENT PROFILE CARD" source={capstoneMarkdown} prev={['/chapter-2', 'Chapter 2']} next={['/practice', 'Workspace']} /></SharedShell></Route>
     <Route path="/practice"><SharedShell><PracticePage /></SharedShell></Route>
-    <Route path="/instructor"><SharedShell><InstructorHomePage /></SharedShell></Route>
-    <Route path="/instructor/chapter-1"><SharedShell><ReaderPage title="Setup and First Program" number="CHAPTER 01 · INSTRUCTOR" source={instructorChapterOneMarkdown} next={['/instructor/chapter-2', 'Instructor Chapter 2']} instructor /></SharedShell></Route>
-    <Route path="/instructor/chapter-2"><SharedShell><ReaderPage title="Variables, Types, and Input" number="CHAPTER 02 · INSTRUCTOR" source={instructorChapterTwoMarkdown} prev={['/instructor/chapter-1', 'Instructor Chapter 1']} instructor /></SharedShell></Route>
+    <Route path="/instructor"><SharedShell><InstructorGate><InstructorDocumentPage document="overview" /></InstructorGate></SharedShell></Route>
+    <Route path="/instructor/chapter-1"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-1" /></InstructorGate></SharedShell></Route>
+    <Route path="/instructor/chapter-2"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-2" /></InstructorGate></SharedShell></Route>
     <Route><SharedShell><NotFound /></SharedShell></Route>
   </Switch>;
 }

@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: instructor
+    description: Password-protected instructor reference operations
 paths:
   /healthz:
     get:
@@ -24,7 +26,113 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /instructor/session:
+    get:
+      operationId: getInstructorSession
+      tags: [instructor]
+      summary: Check instructor session
+      responses:
+        "200":
+          description: Session status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorSession"
+  /instructor/login:
+    post:
+      operationId: loginInstructor
+      tags: [instructor]
+      summary: Start an instructor session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InstructorLoginInput"
+      responses:
+        "200":
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorSession"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorError"
+        "401":
+          description: Password not accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorError"
+        "429":
+          description: Too many attempts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorError"
+        "503":
+          description: Instructor access is not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorError"
+  /instructor/logout:
+    post:
+      operationId: logoutInstructor
+      tags: [instructor]
+      summary: End an instructor session
+      security:
+        - InstructorSessionCookie: []
+      responses:
+        "200":
+          description: Signed out
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorSession"
+  /instructor/content/{document}:
+    get:
+      operationId: getInstructorDocument
+      tags: [instructor]
+      summary: Read an instructor document
+      security:
+        - InstructorSessionCookie: []
+      parameters:
+        - name: document
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [overview, chapter-1, chapter-2]
+      responses:
+        "200":
+          description: Instructor document
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorDocument"
+        "401":
+          description: Instructor session required
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorError"
+        "404":
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstructorError"
 components:
+  securitySchemes:
+    InstructorSessionCookie:
+      type: apiKey
+      in: cookie
+      name: pf_instructor_session
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +141,34 @@ components:
           type: string
       required:
         - status
+    InstructorSession:
+      type: object
+      properties:
+        authenticated:
+          type: boolean
+      required:
+        - authenticated
+    InstructorLoginInput:
+      type: object
+      properties:
+        password:
+          type: string
+          minLength: 1
+          maxLength: 256
+      required:
+        - password
+    InstructorDocument:
+      type: object
+      properties:
+        content:
+          type: string
+      required:
+        - content
+    InstructorError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
 

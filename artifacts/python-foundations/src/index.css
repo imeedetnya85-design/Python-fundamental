@@ -468,6 +468,27 @@ button:focus-visible, a:focus-visible, textarea:focus-visible, select:focus-visi
 .edition-warning { display:flex; flex-direction:column; gap:6px; border-left:4px solid #b66a47; border-radius:7px; margin:21px 0; padding:14px 17px; background:#f3e4d9; color:#604538; }
 .edition-warning strong { font:700 11px var(--app-font-mono); letter-spacing:.08em; text-transform:uppercase; }
 .edition-warning span { font-size:13px; line-height:1.65; }
+.instructor-lock-page { max-width:650px; margin:clamp(30px,8vh,86px) auto; padding:36px; border:1px solid #d9c9a9; border-radius:12px; background:#fbf9f3; box-shadow:0 14px 36px #243b4010; }
+.instructor-lock-page > svg { color:#9a7136; }
+.instructor-lock-mark { width:44px; height:44px; display:grid; place-items:center; margin-bottom:18px; border-radius:50%; color:#866333; background:#eee4d1; }
+.instructor-lock-page h1 { margin:8px 0 12px; color:#20383d; font:500 clamp(34px,5vw,48px)/1.05 var(--app-font-serif); letter-spacing:-.035em; }
+.instructor-lock-page > p { color:#687879; font-size:14px; line-height:1.7; }
+.instructor-login-form { display:grid; gap:10px; max-width:440px; margin-top:23px; }
+.instructor-login-form label { color:#345153; font-size:12px; font-weight:700; }
+.instructor-login-form input { width:100%; min-height:45px; padding:10px 12px; border:1px solid #cfc5b2; border-radius:7px; background:#fffdf8; color:#213b3e; font:14px var(--app-font-sans); }
+.instructor-login-form input:focus-visible { outline:3px solid #bb955d66; border-color:#a57a3c; }
+.instructor-login-form button { justify-self:start; margin-top:5px; }
+.instructor-login-form button:disabled { opacity:.65; cursor:wait; }
+.instructor-login-error { margin:2px 0; color:#9b473e; font-size:12px; line-height:1.5; }
+.instructor-lock-page .instructor-session-note { margin:20px 0 0; color:#7c817d; font-size:11px; }
+.instructor-session-bar { display:flex; align-items:center; justify-content:flex-end; gap:16px; padding-top:12px; padding-bottom:12px; color:#607273; font:11px var(--app-font-mono); }
+.instructor-session-bar span,.instructor-session-bar button { display:inline-flex; align-items:center; gap:7px; }
+.instructor-session-bar button { border:0; padding:7px 10px; border-radius:6px; color:#486164; background:#e9e3d7; cursor:pointer; font:inherit; }
+.instructor-session-bar button:hover { background:#ded5c4; }
+.instructor-document-state { max-width:760px; margin:60px auto; padding-top:24px; padding-bottom:24px; }
+.instructor-document-state h1 { color:#20383d; font:500 34px var(--app-font-serif); }
+.instructor-document-state p { color:#687879; font-size:14px; line-height:1.7; }
+.instructor-document-state .button-primary { margin-top:8px; }
 .reader-content { margin-top:38px;max-width:760px; }
 .reader-content h2 { font:500 34px/1.1 var(--app-font-serif);letter-spacing:-.03em;margin:53px 0 16px;padding-top:15px;border-top:1px solid #ddd5c6;color:#223b40; }
 .reader-content h3 { font:600 21px/1.25 var(--app-font-sans);letter-spacing:-.02em;margin:34px 0 12px;color:#315b5c; }
