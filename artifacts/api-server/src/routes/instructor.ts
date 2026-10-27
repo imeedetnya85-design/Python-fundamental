@@ -20,6 +20,10 @@ const documents = {
   overview: "README.md",
   "chapter-1": "chapter1.md",
   "chapter-2": "chapter2.md",
+  "chapter-3": "chapter3.md",
+  "chapter-4": "chapter4.md",
+  "chapter-5": "chapter5.md",
+  roadmap: "roadmap.md",
 } as const;
 
 function createAuthConfig() {

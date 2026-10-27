@@ -371,7 +371,7 @@ export const useLogoutInstructor = <TError = ErrorType<unknown>,
       return useMutation(getLogoutInstructorMutationOptions(options));
     }
 
-export const getGetInstructorDocumentUrl = (document: 'overview' | 'chapter-1' | 'chapter-2',) => {
+export const getGetInstructorDocumentUrl = (document: 'overview' | 'chapter-1' | 'chapter-2' | 'chapter-3' | 'chapter-4' | 'chapter-5' | 'roadmap',) => {
 
 
 
@@ -382,7 +382,7 @@ export const getGetInstructorDocumentUrl = (document: 'overview' | 'chapter-1' |
 /**
  * @summary Read an instructor document
  */
-export const getInstructorDocument = async (document: 'overview' | 'chapter-1' | 'chapter-2', options?: Parameters<typeof customFetch>[1]): Promise<InstructorDocument> => {
+export const getInstructorDocument = async (document: 'overview' | 'chapter-1' | 'chapter-2' | 'chapter-3' | 'chapter-4' | 'chapter-5' | 'roadmap', options?: Parameters<typeof customFetch>[1]): Promise<InstructorDocument> => {
 
   return customFetch<InstructorDocument>(getGetInstructorDocumentUrl(document),
   {
@@ -397,14 +397,14 @@ export const getInstructorDocument = async (document: 'overview' | 'chapter-1' |
 
 
 
-export const getGetInstructorDocumentQueryKey = (document: 'overview' | 'chapter-1' | 'chapter-2',) => {
+export const getGetInstructorDocumentQueryKey = (document: 'overview' | 'chapter-1' | 'chapter-2' | 'chapter-3' | 'chapter-4' | 'chapter-5' | 'roadmap',) => {
     return [
     `/api/instructor/content/${document}`
     ] as const;
     }
 
 
-export const getGetInstructorDocumentQueryOptions = <TData = Awaited<ReturnType<typeof getInstructorDocument>>, TError = ErrorType<InstructorError>>(document: 'overview' | 'chapter-1' | 'chapter-2', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getInstructorDocument>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+export const getGetInstructorDocumentQueryOptions = <TData = Awaited<ReturnType<typeof getInstructorDocument>>, TError = ErrorType<InstructorError>>(document: 'overview' | 'chapter-1' | 'chapter-2' | 'chapter-3' | 'chapter-4' | 'chapter-5' | 'roadmap', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getInstructorDocument>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -431,7 +431,7 @@ export type GetInstructorDocumentQueryError = ErrorType<InstructorError>
  */
 
 export function useGetInstructorDocument<TData = Awaited<ReturnType<typeof getInstructorDocument>>, TError = ErrorType<InstructorError>>(
- document: 'overview' | 'chapter-1' | 'chapter-2', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getInstructorDocument>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+ document: 'overview' | 'chapter-1' | 'chapter-2' | 'chapter-3' | 'chapter-4' | 'chapter-5' | 'roadmap', options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getInstructorDocument>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
 
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 

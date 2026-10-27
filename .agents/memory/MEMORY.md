@@ -1,1 +1,2 @@
 - [Instructor answer access](instructor-answer-access.md) — Keep solution markdown out of trainee bundles and serve it only after a valid instructor session.
+- [Manual content preservation](manual-content-preservation.md) — Keep supplied Python workbook text unchanged; add beginner guidance separately.

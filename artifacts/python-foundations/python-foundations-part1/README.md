@@ -1,14 +1,14 @@
 # Python Foundations
 
-## Trainee Edition · Part 1: Chapters 1–2
+## Trainee Edition · Part 1: Chapters 1–5
 
 Oct 26, 2026 · @Edet
 
-Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.1
+Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.3
 
 ## Welcome to Python Foundations
 
-This workbook takes you from zero to writing your first complete Python programs, with no programming experience needed. Part 1 covers Chapter 1 (Setup and First Program) and Chapter 2 (Variables, Types, and Input). The chapters follow the Python Universal Learning Path (Revised Edition): Chapter 1 is Phase 1 section 1.1, and Chapter 2 is section 1.2.
+This workbook takes you from zero to writing your first complete Python programs, with no programming experience needed. Part 1 covers Chapter 1 (Setup and First Program), Chapter 2 (Variables, Types, and Input), Chapter 3 (Operators and Truthiness) Chapter 4 (Strings) and Chapter 5 (Control Flow). The chapters follow the Python Universal Learning Path (Revised Edition): Chapter 1 is Phase 1 section 1.1, Chapter 2 is section 1.2, Chapter 3 is section 1.3, Chapter 4 is section 1.4 and Chapter 5 is section 1.5.
 
 ### What you will be able to do after Part 1
 
@@ -62,7 +62,7 @@ All code in this workbook was tested on Python 3.13. Any newer Python 3 version 
 
 ## Contents
 
-Part 1 has two chapters, each ending with a project, and a checkpoint project that combines both. Chapter numbers match the Learning Path: Chapter *n* is Phase 1 section 1.*n*.
+Part 1 has five chapters, each ending with a project, and a checkpoint project that combines Chapters 1 and 2. Chapter numbers match the Learning Path: Chapter *n* is Phase 1 section 1.*n*.
 
 **Chapter 1: Setup and First Program** (Learning Path 1.1)
 
@@ -95,7 +95,43 @@ Part 1 has two chapters, each ending with a project, and a checkpoint project th
 
 **Checkpoint project:** Student Profile Card
 
+**Chapter 3: Operators and Truthiness** (Learning Path 1.3)
+
+- 3.1 What is an operator?
+- 3.2 Arithmetic operators
+- 3.3 Comparison operators
+- 3.4 Assignment operators
+- 3.5 Logical operators
+- 3.6 Membership operators
+- 3.7 Identity operators
+- 3.8 Truthiness
+- 3.9 Operator precedence
+- Exercises, quiz, summary and the Shift Pay Calculator project
+
+**Chapter 4: Strings** (Learning Path 1.4)
+
+- 4.1 Creating strings
+- 4.2 Indexing and slicing
+- 4.3 Immutability
+- 4.4 Building strings: concatenation, f-strings and `format()`
+- 4.5 Escape characters and raw strings
+- 4.6 String methods
+- Exercises, quiz, summary and the Name Badge Maker project
+
+**Chapter 5: Control Flow** (Learning Path 1.5)
+
+- 5.1 Making decisions with `if`
+- 5.2 Two ways: `if` and `else`
+- 5.3 Many ways: `elif`
+- 5.4 Nested conditions and a shortcut
+- 5.5 Repeating with `for` and `range()`
+- 5.6 Repeating with `while`
+- 5.7 Nested loops
+- 5.8 Controlling a loop: `break`, `continue`, `pass`
+- 5.9 Common loop idioms
+- Exercises, quiz, summary and the Score Analyser project
+
 **My progress checklist and what comes next**
 
-**Coming later:** virtual environments (Chapter 10), variable scope (Chapter 7) and truthiness (Chapter 3) are taught in the chapters where you first need them.
+**Coming later:** virtual environments (Chapter 10), variable scope (Chapter 7) are taught in the chapters where you first need them.
 

@@ -9,24 +9,49 @@ import { ArrowDownToLine, ArrowLeft, ArrowRight, Clipboard, Code2, LockKeyhole, 
 import welcomeMarkdown from '../python-foundations-part1/README.md?raw';
 import chapterOneMarkdown from '../python-foundations-part1/chapter1.md?raw';
 import chapterTwoMarkdown from '../python-foundations-part1/chapter2.md?raw';
+import chapterThreeMarkdown from '../python-foundations-part1/chapter3.md?raw';
+import chapterFourMarkdown from '../python-foundations-part1/chapter4.md?raw';
+import chapterFiveMarkdown from '../python-foundations-part1/chapter5.md?raw';
+import chapterSixMarkdown from '../python-foundations-part1/chapter6.md?raw';
 import capstoneMarkdown from '../python-foundations-part1/capstone.md?raw';
+import progressMarkdown from '../python-foundations-part1/progress.md?raw';
 import businessCardStarter from '../python-foundations-part1/starter_code/business_card.py?raw';
 import registrationStarter from '../python-foundations-part1/starter_code/registration.py?raw';
 import invoiceStarter from '../python-foundations-part1/starter_code/invoice.py?raw';
 import profileStarter from '../python-foundations-part1/starter_code/profile_card.py?raw';
 
 const queryClient = new QueryClient();
+const traineeChapters = [
+  { href: '/chapter-1', label: 'Setup & First Program', title: 'Setup and First Program', cardTitle: 'Setup & First Program', summary: 'Install Python, meet the interpreter, and build a business card.', source: chapterOneMarkdown },
+  { href: '/chapter-2', label: 'Variables, Types & Input', title: 'Variables, Types, and Input', cardTitle: 'Variables, Types & Input', summary: 'Name and convert values, read input, and format output.', source: chapterTwoMarkdown },
+  { href: '/chapter-3', label: 'Operators & Truthiness', title: 'Operators and Truthiness', cardTitle: 'Operators & Truthiness', summary: 'Calculate, compare values, combine conditions, and explore truthiness.', source: chapterThreeMarkdown },
+  { href: '/chapter-4', label: 'Strings', title: 'Strings', cardTitle: 'Strings', summary: 'Create, index, slice, format, and transform text.', source: chapterFourMarkdown },
+  { href: '/chapter-5', label: 'Control Flow', title: 'Control Flow', cardTitle: 'Control Flow', summary: 'Use decisions, loops, and common loop patterns.', source: chapterFiveMarkdown },
+  { href: '/chapter-6', label: 'Collections · Part 1', title: 'Core Collections · Part 1: Lists and Tuples', cardTitle: 'Core Collections · Part 1', summary: 'Work with lists, tuples, indexes, methods, and unpacking.', source: chapterSixMarkdown },
+];
 const pages = [
   { href: '/', label: 'Welcome', number: '00' },
-  { href: '/chapter-1', label: 'Setup & First Program', number: '01' },
-  { href: '/chapter-2', label: 'Variables, Types & Input', number: '02' },
-  { href: '/capstone', label: 'Checkpoint project', number: '03' },
-  { href: '/practice', label: 'Python workspace', number: '04' },
+  ...traineeChapters.slice(0, 2).map((chapter, index) => ({ href: chapter.href, label: chapter.label, number: String(index + 1).padStart(2, '0') })),
+  { href: '/capstone', label: 'Checkpoint project', number: 'CP' },
+  ...traineeChapters.slice(2).map((chapter, index) => ({ href: chapter.href, label: chapter.label, number: String(index + 3).padStart(2, '0') })),
+  { href: '/progress', label: 'Progress checklist', number: 'PR' },
+  { href: '/practice', label: 'Python workspace', number: 'PY' },
 ];
 const instructorPages = [
   { href: '/instructor', label: 'Instructor overview', number: 'I0' },
   { href: '/instructor/chapter-1', label: 'Chapter 1 solutions', number: 'I1' },
   { href: '/instructor/chapter-2', label: 'Chapter 2 solutions', number: 'I2' },
+  { href: '/instructor/chapter-3', label: 'Chapter 3 solutions', number: 'I3' },
+  { href: '/instructor/chapter-4', label: 'Chapter 4 solutions', number: 'I4' },
+  { href: '/instructor/chapter-5', label: 'Chapter 5 solutions', number: 'I5' },
+  { href: '/instructor/roadmap', label: 'Trainer notes & roadmap', number: 'IR' },
+];
+const instructorChapters = [
+  { document: 'chapter-1', href: '/instructor/chapter-1', title: 'Setup and First Program', label: 'Chapter 1 · Setup & First Program', summary: 'Trainer notes, exercise answers, and the Business Card reference solution.' },
+  { document: 'chapter-2', href: '/instructor/chapter-2', title: 'Variables, Types, and Input', label: 'Chapter 2 · Variables, Types & Input', summary: 'Worked exercises and reference solutions for both projects.' },
+  { document: 'chapter-3', href: '/instructor/chapter-3', title: 'Operators and Truthiness', label: 'Chapter 3 · Operators & Truthiness', summary: 'Exercise solutions, quiz answers, and the Shift Pay Calculator reference.' },
+  { document: 'chapter-4', href: '/instructor/chapter-4', title: 'Strings', label: 'Chapter 4 · Strings', summary: 'Exercise solutions, quiz answers, and the Name Badge Maker reference.' },
+  { document: 'chapter-5', href: '/instructor/chapter-5', title: 'Control Flow', label: 'Chapter 5 · Control Flow', summary: 'Trainer notes, exercise solutions, quiz answers, and the Score Analyser reference.' },
 ];
 const checklist = [
   'Python 3.12 or newer is installed and `python --version` works',
@@ -44,6 +69,29 @@ const checklist = [
   'I built Project A, the Course Registration Receipt, and scored 16 or more',
   'I built Project B, the Mini Shop Invoice, and scored 16 or more',
   'I built the Student Profile Card without looking at earlier projects',
+  'I can use all six operator families',
+  'I can explain `/`, `//` and `%` with examples',
+  'I can explain `==` versus `is`',
+  'I can predict whether any value is truthy or falsy',
+  'I completed the Chapter 3 exercises and quiz',
+  'I completed the Shift Pay Calculator and scored 16 or more',
+  'I can index and slice strings, including negative indexes',
+  'I can explain why strings are immutable',
+  'I can format text with f-strings and format specifiers',
+  'I can clean and transform text with string methods',
+  'I completed the Chapter 4 exercises and quiz',
+  'I completed the Name Badge Maker and scored 16 or more',
+  'I can write `if`, `elif` and `else` chains in the right order',
+  'I can explain what `range(start, stop, step)` produces',
+  'I can choose between `for` and `while`',
+  'I can use `break`, `continue` and `pass`',
+  'I completed the Chapter 5 exercises and quiz',
+  'I completed the Score Analyser and scored 16 or more',
+  'I can create, read, update, and loop through lists',
+  'I can use list methods and sorting',
+  'I can create, access, unpack, and convert tuples',
+  'I completed the Chapter 6 Part 1 exercises and quiz',
+  'I completed the Shopping List Manager project',
 ];
 const starters = [
   { id: 'business-card', label: 'Business Card', file: 'business_card.py', code: businessCardStarter },
@@ -121,6 +169,70 @@ function AnalogyGrid({ kind }: { kind: 'kitchen' | 'storage' }) {
   return <div className="analogy-grid storage-grid" aria-label="Storage box analogy visual guide">{items.map(([a, b, c]) => <div className="analogy-tile" key={a}><b>{a}</b><span><strong>{b}</strong><br />{c}</span></div>)}</div>;
 }
 
+function LearningAid({ kind }: { kind: 'operators' | 'truthiness' | 'string-index' | 'decision' | 'range' | 'list' | 'tuple' }) {
+  if (kind === 'operators') {
+    const groups = [
+      ['Calculate', '+  −  *  /  //  %  **'],
+      ['Compare', '==  !=  <  >  <=  >='],
+      ['Combine conditions', 'and  or  not'],
+      ['Check membership', 'in  ·  not in'],
+      ['Check identity', 'is  ·  is not'],
+      ['Update a value', '+=  -=  *=  /='],
+    ];
+    return <figure className="learning-figure">
+      <div className="learning-grid">{groups.map(([title, symbols]) => <div className="learning-tile" key={title}><strong>{title}</strong><code>{symbols}</code></div>)}</div>
+      <figcaption>Operators are symbols or words that tell Python what action to take.</figcaption>
+    </figure>;
+  }
+  if (kind === 'truthiness') {
+    return <figure className="learning-figure">
+      <div className="truthiness-grid">
+        <div className="truthy-card"><strong>Falsy · treated as False</strong><code>0 · 0.0 · "" · None · []</code></div>
+        <div className="truthy-card is-truthy"><strong>Truthy · treated as True</strong><code>1 · "hello" · [1, 2]</code></div>
+      </div>
+      <figcaption>Empty values and zero are falsy. Most values with content are truthy.</figcaption>
+    </figure>;
+  }
+  if (kind === 'string-index') {
+    const letters = ['P', 'Y', 'T', 'H', 'O', 'N'];
+    return <figure className="learning-figure">
+      <div className="string-ruler" aria-label="Python indexed from zero through five; negative indexes count backward from minus six to minus one">
+        {letters.map((letter, index) => <div className="string-cell" key={index}><small>{index}</small><strong>{letter}</strong><small>{index - letters.length}</small></div>)}
+      </div>
+      <div className="string-ruler-labels"><span>Positive indexes →</span><span>← Negative indexes</span></div>
+      <figcaption>For <code>"PYTHON"</code>, <code>word[0]</code> is <code>"P"</code> and <code>word[-1]</code> is <code>"N"</code>.</figcaption>
+    </figure>;
+  }
+  if (kind === 'decision') {
+    return <figure className="learning-figure">
+      <div className="decision-flow">
+        <div className="decision-node">Check a condition</div>
+        <div className="decision-branches"><div className="decision-branch"><span>True</span><strong>Run the indented `if` block</strong></div><div className="decision-branch otherwise"><span>False</span><strong>Skip it or run `else`</strong></div></div>
+        <div className="decision-merge">Continue after the decision</div>
+      </div>
+      <figcaption>Python follows one branch based on whether the condition is True or False.</figcaption>
+    </figure>;
+  }
+  if (kind === 'range') {
+    return <figure className="learning-figure">
+      <div className="range-example"><code>range(1, 6, 2)</code><span className="range-arrow">→</span><strong>1&nbsp;&nbsp; 3&nbsp;&nbsp; 5</strong><small>start at 1 · step by 2 · stop before 6</small></div>
+      <figcaption>The stop value is excluded, just like the stop index in a string slice.</figcaption>
+    </figure>;
+  }
+  if (kind === 'list') {
+    const values = ['red', 'green', 'blue'];
+    return <figure className="learning-figure">
+      <div className="collection-rack">{values.map((value, index) => <div className="collection-slot" key={value}><small>index {index}</small><strong>{value}</strong></div>)}</div>
+      <div className="collection-example"><code>colours[1]</code><span>→</span><strong>"green"</strong></div>
+      <figcaption>A list keeps items in order. Python starts counting positions at index 0.</figcaption>
+    </figure>;
+  }
+  return <figure className="learning-figure">
+    <div className="tuple-visual"><span className="tuple-label">point = (4, 7)</span><div className="tuple-values"><span><small>index 0</small><strong>4</strong></span><span><small>index 1</small><strong>7</strong></span></div><span className="tuple-lock">The pair stays fixed after creation</span></div>
+    <figcaption>A tuple also keeps items in order, but you do not change its items in place.</figcaption>
+  </figure>;
+}
+
 function MarkdownReader({ source }: { source: string }) {
   const rows = source.replace(/\r\n/g, '\n').split('\n');
   const blocks: ReactElement[] = [];
@@ -154,6 +266,13 @@ function MarkdownReader({ source }: { source: string }) {
       blocks.push(<Heading key={`h-${i}`} className={labelClass}>{inline(title)}</Heading>);
       if (/The Kitchen Analogy/.test(title)) blocks.push(<AnalogyGrid key={`analogy-${i}`} kind="kitchen" />);
       if (/Labeled Storage Box Analogy/.test(title)) blocks.push(<AnalogyGrid key={`storage-${i}`} kind="storage" />);
+      if (/^3\.1 What is an operator/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="operators" />);
+      if (/^3\.8 Truthiness/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="truthiness" />);
+      if (/^4\.2 Indexing and slicing/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="string-index" />);
+      if (/^5\.1 Making decisions/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="decision" />);
+      if (/^5\.5 Repeating with/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="range" />);
+      if (/^6\.2 Creating and accessing lists/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="list" />);
+      if (/^6\.6 Creating and accessing tuples/.test(title)) blocks.push(<LearningAid key={`aid-${i}`} kind="tuple" />);
       i++;
       continue;
     }
@@ -217,40 +336,41 @@ function SharedShell({ children }: { children: ReactNode }) {
 
 function HomePage() {
   const [done, setDone] = useState<boolean[]>(() => {
-    try { const saved = JSON.parse(localStorage.getItem('pf-progress-v11') || '[]'); return checklist.map((_, i) => Boolean(saved[i])); } catch { return checklist.map(() => false); }
+    try { const saved = JSON.parse(localStorage.getItem('pf-progress-v13') ?? localStorage.getItem('pf-progress-v11') ?? '[]'); return checklist.map((_, i) => Boolean(saved[i])); } catch { return checklist.map(() => false); }
   });
-  useEffect(() => { localStorage.setItem('pf-progress-v11', JSON.stringify(done)); }, [done]);
+  useEffect(() => { localStorage.setItem('pf-progress-v13', JSON.stringify(done)); }, [done]);
   const completed = done.filter(Boolean).length;
   const toggle = (index: number) => setDone((current) => current.map((value, i) => i === index ? !value : value));
   return <div className="page-wrap animate-in">
     <section className="hero-home">
-      <div><div className="eyebrow">Your first steps in Python · Part 1 · Version 1.1</div><h1 className="hero-title">Learn it.<br /><em>Try it.</em> Make it yours.</h1><p className="hero-intro">A practical companion for your first programs. Read your workbook as written, then take each idea for a spin in your own coding space.</p></div>
-      <aside className="hero-aside"><div className="aside-number">01—02</div><p>Two chapters, three guided projects, and a checkpoint to bring the pieces together.</p></aside>
+      <div><div className="eyebrow">Your first steps in Python · Part 1 · Version 1.3</div><h1 className="hero-title">Learn it.<br /><em>Try it.</em> Make it yours.</h1><p className="hero-intro">A practical companion for your first programs. Read your workbook as written, then take each idea for a spin in your own coding space.</p></div>
+      <aside className="hero-aside"><div className="aside-number">01—06</div><p>Chapters 1–5, plus Chapter 6 Part 1, a checkpoint project, and an interactive Python workspace.</p></aside>
     </section>
     <div className="section-head"><h2>Choose your next step</h2><span>THE STUDY PATH</span></div>
     <div className="study-grid">
-      <Link href="/chapter-1" className="study-card feature"><span className="card-index">01 / CHAPTER</span><h3>Setup &<br />First Program</h3><p>Install Python, meet the interpreter, and build a business card.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
-      <Link href="/chapter-2" className="study-card"><span className="card-index">02 / CHAPTER</span><h3>Variables, Types<br />& Input</h3><p>Name and convert values, read input, and format output.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
-      <Link href="/capstone" className="study-card"><span className="card-index">03 / CHECKPOINT</span><h3>Student Profile<br />Card</h3><p>Bring input, conversion, booleans, and formatted output together.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+      {traineeChapters.map((chapter, index) => <Link key={chapter.href} href={chapter.href} className={`study-card ${index === 0 ? 'feature' : ''}`}><span className="card-index">{String(index + 1).padStart(2, '0')} / CHAPTER</span><h3>{chapter.cardTitle}</h3><p>{chapter.summary}</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>)}
+      <Link href="/capstone" className="study-card"><span className="card-index">CP / CHECKPOINT</span><h3>Student Profile Card</h3><p>Bring input, conversion, booleans, and formatted output together.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
     </div>
+    <div className="edition-notice" role="note"><strong>Chapter 6 Part 1 is an added section</strong><span>The supplied trainee file includes Lists and Tuples after Chapter 5, although its title, contents, and progress checklist still describe Chapters 1–5 and say Chapter 6 is next. The app keeps that supplied text intact and links the added section separately.</span></div>
     <Link href="/instructor" className="instructor-entry"><span className="instructor-entry-kicker">FOR TRAINERS · INSTRUCTOR EDITION</span><strong>Open the separate reference copy</strong><span>Trainer notes, exercise answers, and project solutions are included. Do not hand this edition to trainees.</span><ArrowRight size={17} /></Link>
     <div className="two-col">
       <section className="tips-panel"><div className="eyebrow">A note before you begin</div><h3>Small, steady steps win.</h3>
         {['Type every example yourself. The tiny details are where learning sticks.', 'Run your code after each change. Make the feedback loop short.', 'When something breaks, read the exact error before changing anything.', 'Try the exercises first; your trainer can help you untangle the hard parts.'].map((tip, i) => <div className="tip-row" key={tip}><span className="tip-mark">0{i + 1}</span><span>{tip}</span></div>)}
       </section>
-      <section className="progress-card"><div className="progress-head"><h3>Your progress</h3><span className="progress-count">{completed} / {checklist.length}</span></div><div className="progress-track" role="progressbar" aria-label="Workbook progress" aria-valuemin={0} aria-valuemax={checklist.length} aria-valuenow={completed}><div className="progress-fill" style={{ width: `${completed / checklist.length * 100}%` }} /></div><div className="check-list">{checklist.map((item, i) => <label className="progress-item" key={item}><input type="checkbox" checked={done[i]} onChange={() => toggle(i)} aria-label={item} /><span>{item.replace(/`/g, '')}</span></label>)}<Link href="/capstone" className="button-outline" style={{ marginTop: 5 }}>Open full capstone checklist <ArrowRight size={14} /></Link></div></section>
+      <section className="progress-card"><div className="progress-head"><h3>Your progress</h3><span className="progress-count">{completed} / {checklist.length}</span></div><div className="progress-track" role="progressbar" aria-label="Workbook progress" aria-valuemin={0} aria-valuemax={checklist.length} aria-valuenow={completed}><div className="progress-fill" style={{ width: `${completed / checklist.length * 100}%` }} /></div><div className="check-list">{checklist.map((item, i) => <label className="progress-item" key={item}><input type="checkbox" checked={done[i]} onChange={() => toggle(i)} aria-label={item} /><span>{item.replace(/`/g, '')}</span></label>)}<Link href="/progress" className="button-outline" style={{ marginTop: 5 }}>Read the full progress checklist <ArrowRight size={14} /></Link></div></section>
     </div>
     <section className="workspace-cta"><div><div className="eyebrow">Ready to practise?</div><h3>A real Python session, right here.</h3><p>Pick a project starter, edit the code, and run it in your browser.</p></div><Link href="/practice" className="button-primary"><Code2 size={16} /> Open workspace <ArrowRight size={15} /></Link></section>
     <section className="reader-page" style={{ paddingTop: 34 }}><div className="eyebrow">Workbook introduction</div><MarkdownReader source={welcomeMarkdown} /></section>
   </div>;
 }
 
-function ReaderPage({ title, number, source, prev, next, instructor = false }: { title: string; number: string; source: string; prev?: [string, string]; next?: [string, string]; instructor?: boolean }) {
+function ReaderPage({ title, number, source, prev, next, instructor = false, addition }: { title: string; number: string; source: string; prev?: [string, string]; next?: [string, string]; instructor?: boolean; addition?: ReactNode }) {
   return <div className="page-wrap reader-page animate-in">
     <div className="reader-top"><span className="reader-kicker">{instructor ? `INSTRUCTOR REFERENCE / ${number}` : `PART 1 / ${number}`}</span><Link href="/practice" className="button-outline"><Code2 size={14} /> Practise in workspace</Link></div>
     <h1 className="reader-title">{title}</h1>
     <p className="reader-lede">Read at your pace. The workbook content is preserved in full; diagrams and callouts add a little more room to understand each idea.</p>
     {instructor && <aside className="edition-warning" role="note"><strong>Password-protected instructor copy</strong><span>This section contains trainer notes, exercise answers, and project solutions. Sign out when you have finished.</span></aside>}
+    {addition}
     <MarkdownReader source={source} />
     <nav className="reader-footer-nav" aria-label="Adjacent sections">{prev ? <Link href={prev[0]}><ArrowLeft size={14} /> {prev[1]}</Link> : <span />}{next && <Link href={next[0]}>{next[1]} <ArrowRight size={14} /></Link>}</nav>
   </div>;
@@ -343,7 +463,7 @@ function InstructorGate({ children }: { children: ReactNode }) {
   </>;
 }
 
-function InstructorDocumentPage({ document }: { document: 'overview' | 'chapter-1' | 'chapter-2' }) {
+function InstructorDocumentPage({ document }: { document: 'overview' | 'chapter-1' | 'chapter-2' | 'chapter-3' | 'chapter-4' | 'chapter-5' | 'roadmap' }) {
   const [source, setSource] = useState<string | null>(null);
   const [failure, setFailure] = useState<'expired' | 'unavailable' | null>(null);
   const [attempt, setAttempt] = useState(0);
@@ -378,10 +498,18 @@ function InstructorDocumentPage({ document }: { document: 'overview' | 'chapter-
     return <div className="page-wrap instructor-document-state" role="status">Loading protected instructor material…</div>;
   }
   if (document === 'overview') return <InstructorHomePage source={source} />;
-  if (document === 'chapter-1') {
-    return <ReaderPage title="Setup and First Program" number="CHAPTER 01 · INSTRUCTOR" source={source} next={['/instructor/chapter-2', 'Instructor Chapter 2']} instructor />;
+  if (document === 'roadmap') {
+    return <ReaderPage title="Trainer notes and roadmap" number="ROADMAP · INSTRUCTOR" source={source} prev={['/instructor/chapter-5', 'Instructor Chapter 5']} instructor />;
   }
-  return <ReaderPage title="Variables, Types, and Input" number="CHAPTER 02 · INSTRUCTOR" source={source} prev={['/instructor/chapter-1', 'Instructor Chapter 1']} instructor />;
+  const index = instructorChapters.findIndex((chapter) => chapter.document === document);
+  const chapter = instructorChapters[index];
+  const prev = index > 0
+    ? [instructorChapters[index - 1].href, `Instructor Chapter ${index}`] as [string, string]
+    : ['/instructor', 'Instructor overview'] as [string, string];
+  const next = index < instructorChapters.length - 1
+    ? [instructorChapters[index + 1].href, `Instructor Chapter ${index + 2}`] as [string, string]
+    : ['/instructor/roadmap', 'Trainer notes & roadmap'] as [string, string];
+  return <ReaderPage title={chapter.title} number={`CHAPTER ${String(index + 1).padStart(2, '0')} · INSTRUCTOR`} source={source} prev={prev} next={next} instructor />;
 }
 
 function InstructorHomePage({ source }: { source: string }) {
@@ -389,13 +517,13 @@ function InstructorHomePage({ source }: { source: string }) {
     <div className="reader-top"><span className="reader-kicker">SEPARATE TRAINER REFERENCE</span></div>
     <h1 className="reader-title">Instructor Edition</h1>
     <aside className="edition-warning" role="note"><strong>Contains answers and full solutions</strong><span>The uploaded Instructor Edition says not to hand this copy to trainees. Password protection keeps its contents separate from the learner chapters.</span></aside>
-    <Link href="/instructor/chapter-1" className="instructor-entry"><span className="instructor-entry-kicker">SOURCE REVIEW</span><strong>One item to check in the supplied v1.1 file</strong><span>Its “Where to find the answers” table refers to a Checkpoint project solution and a review checklist/roadmap, but the uploaded file ends after Project B’s self-check and does not include those sections.</span><ArrowRight size={17} /></Link>
+    <aside className="edition-notice instructor-edition-notice" role="note"><strong>Chapter 6 instructor answers are not in this upload</strong><span>The trainee file includes Chapter 6 Part 1: Lists and Tuples. This Instructor Edition’s introduction still says Chapters 1–2, while its contents and version history include Chapters 1–5; the roadmap marks Chapter 6 as next.</span></aside>
     <div className="section-head instructor-section-head"><h2>Instructor chapters</h2><span>REFERENCE MATERIALS</span></div>
     <div className="study-grid instructor-study-grid">
-      <Link href="/instructor/chapter-1" className="study-card feature"><span className="card-index">I1 / CHAPTER</span><h3>Setup &<br />First Program</h3><p>Includes trainer guidance, exercise solutions, and the Business Card reference solution.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
-      <Link href="/instructor/chapter-2" className="study-card"><span className="card-index">I2 / CHAPTER</span><h3>Variables, Types<br />& Input</h3><p>Includes worked exercises and reference solutions for both projects.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
+      {instructorChapters.map((chapter, index) => <Link key={chapter.document} href={chapter.href} className={`study-card ${index === 0 ? 'feature' : ''}`}><span className="card-index">I{index + 1} / CHAPTER</span><h3>{chapter.label}</h3><p>{chapter.summary}</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>)}
+      <Link href="/instructor/roadmap" className="study-card"><span className="card-index">IR / TRAINER NOTES</span><h3>Trainer notes & roadmap</h3><p>Review checklist, upcoming chapters, and planning notes.</p><span className="card-arrow"><ArrowRight size={19} /></span></Link>
     </div>
-    <div className="eyebrow instructor-source-label">Instructor Edition · Version 1.1</div>
+    <div className="eyebrow instructor-source-label">Instructor Edition · Version 1.3</div>
     <MarkdownReader source={source} />
   </div>;
 }
@@ -510,11 +638,20 @@ function Router() {
     <Route path="/"><SharedShell><HomePage /></SharedShell></Route>
     <Route path="/chapter-1"><SharedShell><ReaderPage title="Setup and First Program" number="CHAPTER 01" source={chapterOneMarkdown} next={['/chapter-2', 'Chapter 2']} /></SharedShell></Route>
     <Route path="/chapter-2"><SharedShell><ReaderPage title="Variables, Types, and Input" number="CHAPTER 02" source={chapterTwoMarkdown} prev={['/chapter-1', 'Chapter 1']} next={['/capstone', 'Checkpoint project']} /></SharedShell></Route>
-    <Route path="/capstone"><SharedShell><ReaderPage title="Checkpoint project" number="STUDENT PROFILE CARD" source={capstoneMarkdown} prev={['/chapter-2', 'Chapter 2']} next={['/practice', 'Workspace']} /></SharedShell></Route>
+    <Route path="/capstone"><SharedShell><ReaderPage title="Checkpoint project" number="STUDENT PROFILE CARD" source={capstoneMarkdown} prev={['/chapter-2', 'Chapter 2']} next={['/chapter-3', 'Chapter 3']} /></SharedShell></Route>
+    <Route path="/chapter-3"><SharedShell><ReaderPage title="Operators and Truthiness" number="CHAPTER 03" source={chapterThreeMarkdown} prev={['/capstone', 'Checkpoint project']} next={['/chapter-4', 'Chapter 4']} /></SharedShell></Route>
+    <Route path="/chapter-4"><SharedShell><ReaderPage title="Strings" number="CHAPTER 04" source={chapterFourMarkdown} prev={['/chapter-3', 'Chapter 3']} next={['/chapter-5', 'Chapter 5']} /></SharedShell></Route>
+    <Route path="/chapter-5"><SharedShell><ReaderPage title="Control Flow" number="CHAPTER 05" source={chapterFiveMarkdown} prev={['/chapter-4', 'Chapter 4']} next={['/chapter-6', 'Chapter 6 · Part 1']} /></SharedShell></Route>
+    <Route path="/chapter-6"><SharedShell><ReaderPage title="Core Collections · Part 1: Lists and Tuples" number="CHAPTER 06 · PART 1" source={chapterSixMarkdown} prev={['/chapter-5', 'Chapter 5']} next={['/progress', 'Progress checklist']} /></SharedShell></Route>
+    <Route path="/progress"><SharedShell><ReaderPage title="My progress checklist and what comes next" number="STUDY TRACKER" source={progressMarkdown} prev={['/chapter-6', 'Chapter 6 · Part 1']} next={['/practice', 'Workspace']} addition={<aside className="edition-notice" role="note"><strong>Chapter 6 Part 1 has its own added tracker</strong><span>The supplied progress section ends at Chapter 5 and says Chapter 6 is next. The app’s interactive tracker on the welcome page adds checklist items for the included Lists and Tuples section.</span></aside>} /></SharedShell></Route>
     <Route path="/practice"><SharedShell><PracticePage /></SharedShell></Route>
     <Route path="/instructor"><SharedShell><InstructorGate><InstructorDocumentPage document="overview" /></InstructorGate></SharedShell></Route>
     <Route path="/instructor/chapter-1"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-1" /></InstructorGate></SharedShell></Route>
     <Route path="/instructor/chapter-2"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-2" /></InstructorGate></SharedShell></Route>
+    <Route path="/instructor/chapter-3"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-3" /></InstructorGate></SharedShell></Route>
+    <Route path="/instructor/chapter-4"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-4" /></InstructorGate></SharedShell></Route>
+    <Route path="/instructor/chapter-5"><SharedShell><InstructorGate><InstructorDocumentPage document="chapter-5" /></InstructorGate></SharedShell></Route>
+    <Route path="/instructor/roadmap"><SharedShell><InstructorGate><InstructorDocumentPage document="roadmap" /></InstructorGate></SharedShell></Route>
     <Route><SharedShell><NotFound /></SharedShell></Route>
   </Switch>;
 }

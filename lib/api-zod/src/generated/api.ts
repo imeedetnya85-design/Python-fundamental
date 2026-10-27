@@ -53,7 +53,7 @@ export const LogoutInstructorResponse = zod.object({
  * @summary Read an instructor document
  */
 export const GetInstructorDocumentParams = zod.object({
-  "document": zod.enum(['overview', 'chapter-1', 'chapter-2'])
+  "document": zod.enum(['overview', 'chapter-1', 'chapter-2', 'chapter-3', 'chapter-4', 'chapter-5', 'roadmap'])
 })
 
 export const GetInstructorDocumentResponse = zod.object({

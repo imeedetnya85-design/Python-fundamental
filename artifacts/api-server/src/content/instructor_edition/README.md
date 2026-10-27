@@ -1,8 +1,8 @@
 # Python Foundations
 
-## Instructor Edition · Part 1: Chapters 1–2
+## Instructor Edition · Part 1: Chapters 1–5
 
-Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.1
+Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.3
 
 ## Read this first
 
@@ -20,6 +20,9 @@ Prepared by Ime Edet Nya · CRYOBYTEPRIME · Version 1.1
 | Chapter 2 quiz and Storage Box Analogy answers | The Chapter 2 quick quiz table, and the check under 2.1.1 |
 | Chapter 2 Project A and Project B reference solutions, and Project B understanding-check answers | Chapter 2 projects |
 | Checkpoint project solution | Checkpoint project section |
+| Chapter 5 exercise solutions, quiz answers and project reference solution | Under the Chapter 5 exercises, the Chapter 5 quiz table, and the Chapter 5 project |
+| Chapter 3 exercise solutions, quiz answers and project reference solution | Under the Chapter 3 exercises, the Chapter 3 quiz table, and the Chapter 3 project |
+| Chapter 4 exercise solutions, quiz answers and project reference solution | Under the Chapter 4 exercises, the Chapter 4 quiz table, and the Chapter 4 project |
 | Review checklist, roadmap | Trainer notes and roadmap, the last section |
 
 ### How the Trainee Edition differs
@@ -80,4 +83,6 @@ The Revised Edition teaches each idea once, at the moment it is needed. Because 
 | --- | --- | --- |
 | 1.0 | 25 Oct 2026 | First draft of Chapters 1 and 2, with the Kitchen and Storage Box analogies, the flowchart, projects, and separate Trainee and Instructor editions |
 | 1.1 | 26 Oct 2026 | Aligned to the Revised Learning Path: topics moved as listed above, new Business Card project, Course Registration Receipt moved to Chapter 2, more exercises, updated roadmap |
+| 1.2 | 27 Oct 2026 | Added Batch 2: Chapter 3 (Operators and Truthiness) and Chapter 4 (Strings), each with exercises, quiz, summary, trainer's notes and a verified project (Shift Pay Calculator, Name Badge Maker) |
+| 1.3 | 27 Oct 2026 | Added Batch 3: Chapter 5 (Control Flow) with decision and loop analogies, flow diagrams, exercises, quiz, trainer's notes and the Score Analyser project |
 

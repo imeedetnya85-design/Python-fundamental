@@ -800,3 +800,55 @@ coupon_code: <class 'NoneType'>
 | Invoice and type report are neat and readable | 4 |
 
 A score of 16 or more out of 20 means the learner is ready for Chapter 3.
+
+## Checkpoint project: Student Profile Card
+
+This project combines Chapters 1 and 2: input, type conversion, f-strings, booleans and `type()`. Learners build it from scratch in a file called `profile_card.py`, using the requirements and expected result below, without looking back at earlier projects. It is a checkpoint after Chapter 2, not the Phase 1 capstone. The Phase 1 capstone in the Learning Path is the CLI Expense Tracker.
+
+**Requirements**
+
+1. Ask for the full name, age (whole number), height in metres (decimal) and whether the person is a student (yes or no).
+2. Store the student answer as a boolean (`True` or `False`).
+3. Print a profile card with a heading and one line per detail.
+4. Show the age next year, the height with 2 decimal places, and the type of the `age` variable.
+
+**Solution**
+
+```python
+name = input("Full name: ")
+age = int(input("Age: "))
+height_m = float(input("Height in metres: "))
+is_student = input("Are you a student? (yes/no): ").lower() == "yes"
+
+print("\n--- PROFILE CARD ---")
+print(f"Name       : {name}")
+print(f"Age        : {age} (next year: {age + 1})")
+print(f"Height     : {height_m:.2f} m")
+print(f"Student    : {is_student}")
+print(f"Age type   : {type(age)}")
+```
+
+**Expected result**
+
+```text
+Full name: Amara Okafor
+Age: 25
+Height in metres: 1.68
+Are you a student? (yes/no): yes
+
+--- PROFILE CARD ---
+Name       : Amara Okafor
+Age        : 25 (next year: 26)
+Height     : 1.68 m
+Student    : True
+Age type   : <class 'int'>
+```
+
+A second check: `Chidi Eze`, `31`, `1.8` and `no` should show `Height     : 1.80 m`, `Student    : False` and `Age        : 31 (next year: 32)`. Both cases were run with scripted input and gave exactly this output.
+
+**Extension tasks**
+
+1. Add a city field and print it on the card.
+2. Print the height in centimetres as a whole number.
+3. Add a line showing the year the person was born (use a fixed current year for now).
+
