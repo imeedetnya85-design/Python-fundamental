@@ -33,6 +33,8 @@ function createAuthConfig() {
   const passwordHash = scryptSync(password, salt, 32);
   const signingKey = createHmac("sha256", sessionSecret)
     .update("python-foundations:instructor-session-signing:v1")
+    .update("\0")
+    .update(password)
     .digest();
 
   return { passwordHash, passwordSalt: salt, signingKey };
